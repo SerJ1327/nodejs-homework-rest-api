@@ -1,5 +1,3 @@
-// import contactSchemas from "../../cont/contact-schemas.js";
-
 import { validateBody } from "../decorators/index.js";
 import {
   contactAddSchema,
