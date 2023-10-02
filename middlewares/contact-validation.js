@@ -1,11 +1,13 @@
 import { validateBody } from "../decorators/index.js";
 import {
-  contactAddSchema,
-  contactUpdateFavoriteSchema,
-} from "../models/Contact.js";
+  contactAddJoiSchema,
+  contactUpdateFavoriteJoiSchema,
+} from "../models/index.js";
 
-const addContactValidate = validateBody(contactAddSchema);
+const addContactJoiValidate = validateBody(contactAddJoiSchema);
 
-const updateFavoriteContactValidate = validateBody(contactUpdateFavoriteSchema);
+const updateFavoriteContactJoiValidate = validateBody(
+  contactUpdateFavoriteJoiSchema
+);
 
-export default (addContactValidate, updateFavoriteContactValidate);
+export { addContactJoiValidate, updateFavoriteContactJoiValidate };
