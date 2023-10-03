@@ -11,3 +11,5 @@ export {
 export { default as isValidId } from "./isValidId.js";
 
 export { default as authenticate } from "./authenticate.js";
+
+export { default as subscriptionsMiddleware } from "./subscriptionsMiddleware.js";

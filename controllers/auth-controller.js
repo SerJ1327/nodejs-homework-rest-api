@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import { User } from "../models/index.js";
+import { User, subscription } from "../models/index.js";
 import { ctrlWrapper } from "../decorators/index.js";
 import { HttpError } from "../helpers/index.js";
 
@@ -14,7 +14,12 @@ const signup = async (req, res) => {
     throw HttpError(409, "Email in use");
   }
   const hashPassword = await bcrypt.hash(password, 10);
-  const newUser = await User.create({ ...req.body, password: hashPassword });
+  const subscriptions = await subscription.findOne({ value: "starter" });
+  const newUser = await User.create({
+    ...req.body,
+    password: hashPassword,
+    subscriptions: [subscriptions.value],
+  });
   res
     .status(201)
     .json({ email: newUser.email, subscription: newUser.subscription });
@@ -33,13 +38,18 @@ const signin = async (req, res) => {
   const { _id: id } = user;
   const payload = { id };
 
-  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "12h" });
+  const token = jwt.sign(
+    payload,
+    JWT_SECRET,
+    { expiresIn: "12h" },
+    { subscription: id.subscriptions }
+  );
 
   await User.findByIdAndUpdate(id, { token });
 
   res.json({
     token,
-    user: { email: user.email, subscription: user.subscription },
+    user: { email: user.email, subscriptions: user.subscriptions },
   });
 };
 
