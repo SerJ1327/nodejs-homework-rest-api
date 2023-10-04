@@ -4,6 +4,7 @@ import {
   addContactJoiValidate,
   updateFavoriteContactJoiValidate,
   authenticate,
+  subscriptionsMiddleware,
   isValidId,
 } from "../../middlewares/index.js";
 
@@ -11,7 +12,11 @@ const contactsRouter = express.Router();
 
 contactsRouter.use(authenticate);
 
-contactsRouter.get("/", contactsController.getAll);
+contactsRouter.get(
+  "/",
+  subscriptionsMiddleware(["starter", "pro", "business"]),
+  contactsController.getAll
+);
 
 contactsRouter.get("/:contactId", isValidId, contactsController.getById);
 
