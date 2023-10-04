@@ -55,7 +55,7 @@ const signin = async (req, res) => {
 
 const getCurrent = (req, res) => {
   const { email } = req.user;
-  res.json({ email });
+  res.json(email);
 };
 
 const signout = async (req, res) => {
