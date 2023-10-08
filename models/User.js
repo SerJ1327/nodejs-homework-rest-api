@@ -23,6 +23,7 @@ const userSchema = new Schema(
       default: "starter",
     },
     token: String,
+    avatarURL: { type: String },
     subscriptions: [{ type: String, ref: "subscription" }],
   },
   { versionKey: false, timestamps: true }

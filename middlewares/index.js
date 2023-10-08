@@ -6,10 +6,12 @@ export {
 export {
   userSignupJoiValidate,
   userSigninJoiValidate,
-} from "./auth-validation.js";
+} from "./validation/auth-validation.js";
 
-export { default as isValidId } from "./isValidId.js";
+export { default as isValidId } from "./validation/isValidId.js";
 
 export { default as authenticate } from "./authenticate.js";
 
 export { default as subscriptionsMiddleware } from "./subscriptionsMiddleware.js";
+
+export { default as upload } from "./upload.js";
