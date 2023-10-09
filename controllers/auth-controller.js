@@ -4,10 +4,11 @@ import jwt from "jsonwebtoken";
 import gravatar from "gravatar";
 import Jimp from "jimp";
 import path from "path";
+import { nanoid } from "nanoid";
 
 import { User, subscription } from "../models/index.js";
 import { ctrlWrapper } from "../decorators/index.js";
-import { HttpError } from "../helpers/index.js";
+import { HttpError, sendEmail } from "../helpers/index.js";
 
 const { JWT_SECRET } = process.env;
 
@@ -20,6 +21,8 @@ const signup = async (req, res) => {
     throw HttpError(409, "Email in use");
   }
   const hashPassword = await bcrypt.hash(password, 10);
+  const verificationCode = nanoid();
+
   const subscriptions = await subscription.findOne({ value: "starter" });
 
   const avatarURL = gravatar.url(email);
@@ -28,7 +31,17 @@ const signup = async (req, res) => {
     password: hashPassword,
     avatarURL,
     subscriptions: [subscriptions.value],
+    verificationCode,
   });
+
+  const verifyEmail = {
+    to: email,
+    subject: "Verify email",
+    html: `<a target="_blank href="${BASE_URL}http://localhost:3000/api/auth/verify/${verificationCode}>Click to verify email</a>`,
+  };
+
+  await sendEmail(verifyEmail);
+
   res.status(201).json({
     email: newUser.email,
     subscription: newUser.subscription,
