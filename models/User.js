@@ -25,6 +25,11 @@ const userSchema = new Schema(
     token: String,
     avatarURL: { type: String },
     subscriptions: [{ type: String, ref: "subscription" }],
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationCode: { type: String },
   },
   { versionKey: false, timestamps: true }
 );
