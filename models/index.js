@@ -5,7 +5,11 @@ export {
   contactUpdateFavoriteJoiSchema,
 } from "./Contact.js";
 
-export { userSignupJoiSchema, userSigninJoiSchema } from "./User.js";
+export {
+  userSignupJoiSchema,
+  userSigninJoiSchema,
+  userEmailJoiSchema,
+} from "./User.js";
 
 export { default as Contact } from "./Contact.js";
 export { default as User } from "./User.js";

@@ -6,6 +6,7 @@ export {
 export {
   userSignupJoiValidate,
   userSigninJoiValidate,
+  userEmailJoiValidate,
 } from "./validation/auth-validation.js";
 
 export { default as isValidId } from "./validation/isValidId.js";
